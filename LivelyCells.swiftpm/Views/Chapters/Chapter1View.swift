@@ -3,6 +3,7 @@ import SpriteKit
 
 struct Chapter1 : View {
     @State var reloaded = true
+    @State var started = false
     
     var golScene = ExampleGOL()
     
@@ -41,8 +42,20 @@ Cellular Automata is a field that combines Mathematics and Computer Science that
                     if reloaded{
                         HStack{
                             Spacer()
-                            SpriteView(scene: scene)
-                                .frame(width: 390, height: 390)
+                            if started{
+                                SpriteView(scene: scene)
+                                    .frame(width: 390, height: 390)    
+                            } else{
+                                Button(action: {
+                                    started = true
+                                }, label: {
+                                    Text("Start Simulation")
+                                        .frame(width: 390, height: 390)
+                                        .font(.title)
+                                        .bold() 
+                                })
+                                .buttonStyle(.borderedProminent)
+                            }
                             Spacer()
                         }
                     }
@@ -65,7 +78,7 @@ Cellular Automata is a field that combines Mathematics and Computer Science that
                             .cornerRadius(10)
                             .foregroundColor(.secondary)
                             .frame(width: 3,height:.infinity)
-                        Text("The image above is a simulation of Conway's Game of Life, the most famous cellular automation. It was created by mathematician John Horton Conway in 1970. This simulation starts off at a random state and follows a certain set of rules. Conway's Game of Life will be further discussed in Chapter 3.")
+                        Text("The simulation above is of Conway's Game of Life, the most famous cellular automation. It was created by mathematician John Horton Conway in 1970. This simulation starts off at a random state and follows a certain set of rules. Conway's Game of Life will be further discussed in Chapter 3.")
                             .padding(10)
                     }
                     .background(.quaternary)
