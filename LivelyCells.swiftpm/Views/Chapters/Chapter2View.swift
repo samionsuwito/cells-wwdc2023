@@ -58,7 +58,7 @@ We often draw these Cellular Automata using a time-space diagram where each row 
                         HStack{
                             Spacer()
                             if started{
-                                SpriteView(scene: rule110scene)
+                                SpriteView(scene: rule110scene,preferredFramesPerSecond: 1)
                                     .frame(width: 278, height: 278)
                                     .transformEffect(.init(scaleX: 1, y: -1))
                                     .transformEffect(.init(translationX: 0, y: 278))

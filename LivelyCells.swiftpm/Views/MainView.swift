@@ -7,7 +7,7 @@ struct ChapterItem: Identifiable {
 
 struct MainView: View {
     @State var columnVisibility = NavigationSplitViewVisibility.doubleColumn
-    let chapters: [ChapterItem] = [ChapterItem( name: "Chapter 1: An Introduction to Cellular Automata", id:0),ChapterItem(name: "Chapter 2: 1D Cellular Automata", id: 1),ChapterItem(name: "Chapter 2.5: Elementary Cellular Automata Explorer",id:2)]
+    let chapters: [ChapterItem] = [ChapterItem( name: "Chapter 1: An Introduction to Cellular Automata", id:0),ChapterItem(name: "Chapter 2: 1D Cellular Automata", id: 1),ChapterItem(name: "Chapter 2.5: Elementary Cellular Automata Explorer",id:2),ChapterItem(name: "Chapter 3: 2D Cellular Automata", id: 3)]
     @State private var selectedChapterID: ChapterItem.ID? = 0
     
     var body: some View {
@@ -25,6 +25,8 @@ struct MainView: View {
                     Chapter2()
                 case 2:
                     Chapter25()
+                case 3:
+                    Chapter3()
                 default:
                     Chapter1()
                 }

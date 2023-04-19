@@ -49,7 +49,7 @@ Cellular Automata is a field that combines Mathematics and Computer Science that
                                 Button(action: {
                                     started = true
                                 }, label: {
-                                    Text("Start Simulation")
+                                    Text("Start Simulation \n Click Here")
                                         .frame(width: 390, height: 390)
                                         .font(.title)
                                         .bold() 

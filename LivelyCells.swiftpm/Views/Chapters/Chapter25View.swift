@@ -4,7 +4,8 @@ import SpriteKit
 struct Chapter25 : View {
     @State var rulesStates:[Bool] = [true,true,true,true,true,true,true,true]
     @State var ruleName: String = "255"
-    @State var initialState: [Bool] = [false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,true]
+    @State var initialState: [Bool] = Array(repeating: false, count: 140)
+    @State var shift = 0
     @State var started = false
     
     var elementScene = Elementary()
@@ -39,7 +40,18 @@ struct Chapter25 : View {
                         .bold()
                         .frame(maxWidth:.infinity,alignment: .center)
                     
-                    Text("Explore and find your own patterns. Create your own Elementary Cellular Automata by setting the rules and the initial states. Some interesting rules to try are: Rule 30, 90, 110 and 184.")
+                    Text("Explore and find your own patterns. Create your own Elementary Cellular Automata by setting the rules and the initial states. Some interesting rules to try are: Rule 30, 75, 90 and 110.")
+                    
+                    HStack{
+                        Rectangle()
+                            .cornerRadius(10)
+                            .foregroundColor(.secondary)
+                            .frame(width: 3,height:.infinity)
+                        Text("Fun Fact! Rule 30 is actually used in Random Number Generators and Rule 90 features the Sierpiński Triangle fractal.")
+                            .padding(10)
+                    }
+                    .background(.quaternary)
+                    .cornerRadius(4)
                     
                     Text("Rules")
                         .font(.title)
@@ -361,11 +373,21 @@ struct Chapter25 : View {
                     
                     HStack{
                         Spacer()
+                        if shift > 0 {
+                            Button(action: {
+                                shift -= 1
+                            }, label: {
+                                Image(systemName: "chevron.left.square.fill")
+                                    .resizable()
+                            })
+                            .frame(width:30, height:30)
+                            .shadow(color: .black, radius: 2.5, x: 0, y: 0)
+                        }
                         ForEach(0..<20){ i in
                             Button(action: {
-                                initialState[i] = !initialState[i]
+                                initialState[i+shift] = !initialState[i+shift]
                             }, label: {
-                                if initialState[i]{
+                                if initialState[i+shift]{
                                     RoundedRectangle(cornerRadius: 10, style: .continuous)
                                         .strokeBorder(Color.black,lineWidth:2)
                                         .background(RoundedRectangle(cornerRadius:10,style:.continuous).foregroundColor(.black))
@@ -382,9 +404,22 @@ struct Chapter25 : View {
                                     .shadow(color: .black, radius: 2.5, x: 0, y: 0)
                             )
                         }
+                        if shift < 120{
+                            Button(action: {
+                                shift += 1
+                            }, label: {
+                                Image(systemName: "chevron.right.square.fill")
+                                    .resizable()
+
+                            })
+                            .frame(width:30, height:30)
+                            .shadow(color: .black, radius: 2.5, x: 0, y: 0)
+                        }
                         Spacer()
                         
                     }
+                    .padding(.bottom,20)
+                    
                     HStack{
                         Spacer()
                         Button(action: {
@@ -401,7 +436,7 @@ struct Chapter25 : View {
                     HStack{
                         Spacer()
                         if started{
-                            SpriteView(scene: scene)
+                            SpriteView(scene: scene,preferredFramesPerSecond: 1)
                                 .frame(width: 278, height: 278)
                                 .transformEffect(.init(scaleX: 1, y: -1))
                                 .transformEffect(.init(translationX: 0, y: 278))
@@ -444,12 +479,12 @@ class Elementary: SKScene{
         cellStates = []
         cells = []
         self.removeAllChildren()
-        var firstCellRow: [Bool] = []
-        for _ in 0...gridSize-20{
-            firstCellRow.append(false)
-        }
-        firstCellRow += initial
-        cellStates.append(firstCellRow)
+//        var firstCellRow: [Bool] = []
+//        for _ in 0...gridSize-20{
+//            firstCellRow.append(false)
+//        }
+//        firstCellRow += initial
+        cellStates.append(initial)
         for i in 1...gridSize{
             var newCellRow: [Bool] = []
             for j in 0...gridSize{
