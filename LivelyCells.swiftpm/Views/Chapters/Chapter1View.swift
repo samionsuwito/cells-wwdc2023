@@ -33,9 +33,11 @@ struct Chapter1 : View {
             ScrollView{
                 VStack(alignment: .leading, spacing: 20) {
                     Text("""
+***Make sure to click all the green "Start Simulation" buttons***
+
 Cellular Automata is a field that combines Mathematics and Computer Science that studies how ***"cells"*** behave within a given set of rules in a closed environment. 
  
- Cellular Automata can create many cool patterns that emerge from a simple set of cells. Additionally, Cellular Automata can be used as a model for real-life applications such as forest fires and traffic lights.
+ Cellular Automata can create many cool patterns that emerge from a simple set of cells. Additionally, Cellular Automata can be used as a model for real-life applications such as forest fires and cave generation.
 """)
                     .font(.body)
                     
@@ -43,8 +45,23 @@ Cellular Automata is a field that combines Mathematics and Computer Science that
                         HStack{
                             Spacer()
                             if started{
-                                SpriteView(scene: scene)
-                                    .frame(width: 390, height: 390)    
+                                VStack{
+                                    SpriteView(scene: scene)
+                                        .frame(width: 390, height: 390)  
+                                    HStack{
+                                        Spacer()
+                                        Button(action: {
+                                            golScene.reset()
+                                        }, label: {
+                                            HStack{
+                                                Image(systemName: "gobackward")
+                                                Text("Reset") 
+                                            }
+                                        })
+                                        .buttonStyle(.borderedProminent)
+                                        Spacer()
+                                    }
+                                }  
                             } else{
                                 Button(action: {
                                     started = true
@@ -58,19 +75,6 @@ Cellular Automata is a field that combines Mathematics and Computer Science that
                             }
                             Spacer()
                         }
-                    }
-                    HStack{
-                        Spacer()
-                        Button(action: {
-                            golScene.reset()
-                        }, label: {
-                            HStack{
-                                Image(systemName: "gobackward")
-                                Text("Reset") 
-                            }
-                        })
-                        .buttonStyle(.borderedProminent)
-                        Spacer()
                     }
                     
                     HStack{
